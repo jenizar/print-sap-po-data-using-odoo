@@ -1,0 +1,40 @@
+@AbapCatalog.sqlViewName: 'Z_SQL_EPM_PO'
+@AbapCatalog.compiler.compareFilter: true
+@AbapCatalog.preserveKey: true
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'CDS View for EPM Purchase Order object extraction'
+@Metadata.ignorePropagatedAnnotations: true
+define view Z_CDS_EPM_PO as select from snwd_po as po
+  left outer join snwd_po_i as item on po.node_key = item.parent_key
+  left outer join snwd_pd as prod on item.product_guid = prod.node_key
+  left outer join snwd_bpa as bpa on po.partner_guid = bpa.node_key
+  left outer join snwd_ad as add on bpa.address_guid = add.node_key  
+  left outer join snwd_texts as text on prod.name_guid = text.parent_key and text.language = 'E'
+{
+    key item.node_key       as ItemGuid,
+    po.po_id                as PoId,
+    po.created_at           as CreatedAt,
+    po.note_guid            as NoteGuid,
+    po.partner_guid         as PartnerGuid,
+    po.currency_code        as CurrencyCode,
+    po.gross_amount         as GrossAmount,
+    po.net_amount           as NetAmount,
+    po.tax_amount           as TaxAmount,
+    po.overall_status       as OverallStatus,
+    bpa.company_name        as CompanyName,
+    bpa.legal_form          as LegalForm,
+    add.street              as Street,
+    add.building            as Building,
+    add.city                as City,
+    add.postal_code         as PostalCode,
+    add.country             as Country,
+    text.text               as ProductName,
+    item.po_item_pos        as ItemPosition,
+    item.gross_amount       as ItemGrossAmount,
+    item.net_amount         as ItemNetAmount,
+    item.tax_amount         as ItemTaxAmount,
+    prod.node_key           as ProductGuid,
+    prod.measure_unit       as MeasureUnit, 
+    text.node_key           as TextGuid
+}
+
