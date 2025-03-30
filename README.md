@@ -18,6 +18,8 @@ Demo:
 
 References:
 
-1.
+1. https://odooerpapps.wordpress.com/2025/03/30/print-sap-purchase-order-data-using-odoo-erp/
 
-2. https://github.com/jenizar/print-sap-so-data-using-odoo
+2. https://odooerpapps.wordpress.com/2024/08/17/get-sap-sales-order-data-print-output-using-odoo-erp/
+
+3. https://github.com/jenizar/print-sap-so-data-using-odoo
